@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Highcharts with Leave Data</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+
+        #container {
+            width: 100%;
+            height: 400px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Leave Distribution by Type</h1>
+    <p>This chart shows the distribution of leave types based on the JSON data provided.</p>
+    <div id="container"></div>
+    <script>
+        // Fetch JSON data from the specified path
+        fetch('/spec/formatedData/chartdata.json')
+            .then(response => response.json())
+            .then(data => {
+                // Process the data to get leave type counts
+                const leaveTypeCounts = data.leaveType.reduce((acc, type, index) => {
+                    acc[type] = (acc[type] || 0) + parseInt(data.leaveCount[index]);
+                    return acc;
+                }, {});
+
+                // Prepare series data for the chart
+                const seriesData = Object.keys(leaveTypeCounts).map(type => ({
+                    name: type,
+                    y: leaveTypeCounts[type]
+                }));
+
+                // Create the Highcharts chart
+                Highcharts.chart('container', {
+                    chart: {
+                        type: 'pie'
+                    },
+                    title: {
+                        text: 'Leave Distribution by Type'
+                    },
+                    series: [{
+                        name: 'Leaves',
+                        data: seriesData
+                    }],
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Error loading JSON:', error));
+    </script>
+</body>
+
+</html>

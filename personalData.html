@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .profile-section {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Profile Information</h1>
+    <div id="profile-container"></div>
+    <script>
+        async function fetchAndDisplayXML() {
+            try {
+                const response = await fetch('spec/formattedProfileData/profileData.xml'); // Update with your XML file path
+                const text = await response.text();
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(text, 'text/xml');
+
+                const profile = xmlDoc.getElementsByTagName('Profile')[0];
+                if (!profile) {
+                    throw new Error("Profile element not found in the XML.");
+                }
+
+                const profileContainer = document.getElementById('profile-container');
+
+                // Function to safely get text content from an XML element
+                function getElementTextContent(tagName, parent = profile) {
+                    const element = parent.getElementsByTagName(tagName)[0];
+                    return element ? element.textContent : 'N/A';
+                }
+
+                // Extract and display basic profile information
+                const name = getElementTextContent('Name');
+                const designation = getElementTextContent('Designation');
+
+                const primaryAddress = getElementTextContent('Primary', profile.getElementsByTagName('Address')[0]);
+                const alternateAddress = getElementTextContent('Alternate', profile.getElementsByTagName('Address')[0]);
+
+                const email = getElementTextContent('Email', profile.getElementsByTagName('Contact')[0]);
+                const phone = getElementTextContent('Phone', profile.getElementsByTagName('Contact')[0]);
+
+                const profileDetails = profile.getElementsByTagName('ProfileDetails')[0];
+                const dateOfBirth = getElementTextContent('DateOfBirth', profileDetails);
+                const gender = getElementTextContent('Gender', profileDetails);
+                const fathersName = getElementTextContent('FathersName', profileDetails);
+                const mothersName = getElementTextContent('MothersName', profileDetails);
+                const nomineeName = getElementTextContent('NomineeName', profileDetails);
+                const languageKnown = getElementTextContent('LanguageKnown', profileDetails);
+                const religion = getElementTextContent('Religion', profileDetails);
+                const bloodGroup = getElementTextContent('BloodGroup', profileDetails);
+                const maritalStatus = getElementTextContent('MaritalStatus', profileDetails);
+                const spouseName = getElementTextContent('SpouseName', profileDetails);
+                const children = getElementTextContent('Children', profileDetails);
+
+                const emergencyContacts = profile.getElementsByTagName('EmergencyContacts')[0];
+                const emergencyContactList = emergencyContacts ? emergencyContacts.getElementsByTagName('Contact') : [];
+
+                const qualification = profile.getElementsByTagName('Qualification')[0];
+                const degree = getElementTextContent('Degree', qualification);
+                const institution = getElementTextContent('Institution', qualification);
+                const year = getElementTextContent('Year', qualification);
+
+                const careerDetails = profile.getElementsByTagName('CareerDetails')[0];
+                const organization = getElementTextContent('Organization', careerDetails);
+                const careerDesignation = getElementTextContent('Designation', careerDetails);
+                const department = getElementTextContent('Department', careerDetails);
+                const currentlyWorksHere = getElementTextContent('CurrentlyWorksHere', careerDetails);
+                const workingPeriod = getElementTextContent('WorkingPeriod', careerDetails);
+                const currentCTC = getElementTextContent('CurrentCTC', careerDetails);
+                const expectedCTC = getElementTextContent('ExpectedCTC', careerDetails);
+
+                // Create and append HTML elements for the profile data
+                profileContainer.innerHTML = `
+                    <div class="profile-section">
+                        <h2>Basic Information</h2>
+                        <p><strong>Name:</strong> ${name}</p>
+                        <p><strong>Designation:</strong> ${designation}</p>
+                        <p><strong>Primary Address:</strong> ${primaryAddress}</p>
+                        <p><strong>Alternate Address:</strong> ${alternateAddress}</p>
+                        <p><strong>Email:</strong> ${email}</p>
+                        <p><strong>Phone:</strong> ${phone}</p>
+                    </div>
+                    <div class="profile-section">
+                        <h2>Profile Details</h2>
+                        <p><strong>Date of Birth:</strong> ${dateOfBirth}</p>
+                        <p><strong>Gender:</strong> ${gender}</p>
+                        <p><strong>Father's Name:</strong> ${fathersName}</p>
+                        <p><strong>Mother's Name:</strong> ${mothersName}</p>
+                        <p><strong>Nominee Name:</strong> ${nomineeName}</p>
+                        <p><strong>Language Known:</strong> ${languageKnown}</p>
+                        <p><strong>Religion:</strong> ${religion}</p>
+                        <p><strong>Blood Group:</strong> ${bloodGroup}</p>
+                        <p><strong>Marital Status:</strong> ${maritalStatus}</p>
+                        <p><strong>Spouse Name:</strong> ${spouseName}</p>
+                        <p><strong>Children:</strong> ${children}</p>
+                    </div>
+                    <div class="profile-section">
+                        <h2>Emergency Contacts</h2>
+                        ${Array.from(emergencyContactList).map(contact => `
+                            <div class="emergency-contact">
+                                <p><strong>Name:</strong> ${getElementTextContent('Name', contact)}</p>
+                                <p><strong>Relationship:</strong> ${getElementTextContent('Relationship', contact)}</p>
+                                <p><strong>Contact Number:</strong> ${getElementTextContent('ContactNumber', contact)}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="profile-section">
+                        <h2>Qualification</h2>
+                        <p><strong>Degree:</strong> ${degree}</p>
+                        <p><strong>Institution:</strong> ${institution}</p>
+                        <p><strong>Year:</strong> ${year}</p>
+                    </div>
+                    <div class="profile-section">
+                        <h2>Career Details</h2>
+                        <p><strong>Organization:</strong> ${organization}</p>
+                        <p><strong>Designation:</strong> ${careerDesignation}</p>
+                        <p><strong>Department:</strong> ${department}</p>
+                        <p><strong>Currently Works Here:</strong> ${currentlyWorksHere}</p>
+                        <p><strong>Working Period:</strong> ${workingPeriod}</p>
+                        <p><strong>Current CTC:</strong> ${currentCTC}</p>
+                        <p><strong>Expected CTC:</strong> ${expectedCTC}</p>
+                    </div>
+                `;
+            } catch (error) {
+                console.error('Error fetching or parsing XML:', error);
+            }
+        }
+
+        // Call the function to fetch and display the XML data
+        fetchAndDisplayXML();
+    </script>
+</body>
+
+</html>

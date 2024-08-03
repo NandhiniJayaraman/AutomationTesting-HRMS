@@ -1,0 +1,55 @@
+{
+  "Name": "NANDHINI J",
+  "Designation": "Associate Trainee",
+  "Address": {
+    "Primary": "Finstein Third Floor,C Block, Greams Rd, Thousand Lights, Chennai, Tamil Nadu 600006.",
+    "Alternate": "Contact"
+  },
+  "Contact": {
+    "Email": "nansjayaraman@gmail.com",
+    "Phone": "8270328188"
+  },
+  "Profile": {
+    "DateOfBirth": "6/411, Kattukottai,Othiyathur,Gangavalli, Tamil Nadu.",
+    "Gender": "Profile",
+    "FatherName": "Employment",
+    "MotherName": "Bank & Statutory info",
+    "NomineeName": "Personal Details",
+    "LanguageKnown": [
+      "Date Of Birth"
+    ],
+    "Religion": "03 Jun 2000",
+    "BloodGroup": "Gender",
+    "MaritalStatus": "Female",
+    "SpouseName": "Father Name",
+    "Children": [
+      "Jayaraman R"
+    ]
+  },
+  "EmergencyContacts": [
+    {
+      "Name": "Mother Name",
+      "Relationship": "Nallammal J",
+      "ContactNumber": "Nominee Name"
+    },
+    {
+      "Name": "Jayaraman R",
+      "Relationship": "Language Known",
+      "ContactNumber": "Tamil;English;"
+    }
+  ],
+  "Qualification": {
+    "Degree": "Religion",
+    "Institution": "Hindu",
+    "Year": "Blood Group"
+  },
+  "CareerDetails": {
+    "Organization": "A+",
+    "Designation": "Marital Status",
+    "Department": "Single",
+    "CurrentlyWorksHere": "Spouse Name",
+    "WorkingPeriod": "--",
+    "CurrentCTC": null,
+    "ExpectedCTC": null
+  }
+}
