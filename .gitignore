@@ -7,4 +7,4 @@ node_modules
 
 .env
 allure-report/index.html
-spec/testData/data.json
+/spec/testData/data.json
