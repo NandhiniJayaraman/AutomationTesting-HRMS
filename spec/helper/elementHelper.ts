@@ -13,3 +13,11 @@ export async function addCustomStep(actual: any, expected: any, stepDescription:
         throw error;
     }
 }
+
+export async function getEnvVar(key: string): Promise<string> {
+    const value = process.env[key];
+    if (!value) {
+        throw new Error(`Environment variable ${key} is not defined`);
+    }
+    return value;
+}

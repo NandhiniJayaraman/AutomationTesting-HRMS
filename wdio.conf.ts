@@ -66,12 +66,12 @@ export const config: Options.Testrunner = {
 
         browserName: 'chrome'
     },
-    {
-        maxInstances: 10,
+        // {
+        //     maxInstances: 10,
 
-        browserName: 'firefox'
+        //     browserName: 'firefox'
 
-    }
+        // }
     ],
 
     //

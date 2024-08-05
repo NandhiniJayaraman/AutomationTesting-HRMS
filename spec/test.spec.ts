@@ -9,7 +9,7 @@ import { yourRquestPage } from './screenObjects/LeaveRequest/yourRequest.ts';
 import DataHandler from './formatedData/chartData.ts';
 import { WFHApplyForm } from './screenObjects/WorkFromHome/WFHApplyForm.ts';
 import allureReporter from '@wdio/allure-reporter';
-import { addCustomStep } from './helper/elementHelper.ts';
+import { addCustomStep, getEnvVar } from './helper/elementHelper.ts';
 
 describe('HRMS Testing', () => {
     const loginPage = new LoginPage();
@@ -28,8 +28,10 @@ describe('HRMS Testing', () => {
         // Extract data from Excel before starting tests
         await extract.excractdata();
 
+
         // Open HRMS login page
-        await browser.url('https://hrms.finstein.ai/Account/login');
+        const appUrl = getEnvVar('app_url')
+        await browser.url(await appUrl)
     });
 
     it(`FIN-HRMS-001: should log in to HRMS successfully`, async () => {

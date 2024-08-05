@@ -1,10 +1,10 @@
 .env
 /apps
 node_modules
-test/screenshots/
 /allure-results
 /allure-report
 /_results_
 
 .env
 allure-report/index.html
+spec/testData
